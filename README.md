@@ -12,3 +12,13 @@ Eating is not limited by the remaining amounts of spaghetti or stomach space; an
 The problem is how to design a discipline of behavior (a concurrent algorithm) such that no philosopher will starve; i.e., each can forever continue to alternate between eating and thinking, assuming that no philosopher can know when others may want to eat or think.
 
 This exercise is part of the basic curriculum at <a href='https://www.42sp.org.br/'>42 São Paulo</a>.
+
+## work_history
+
+<details>
+  <summary>Click to expand </summary>
+
+
+  **September 11th 2021** - I set up the project structure and Makefile, as well as some standard input error handling. I still have to figure out exactly how I'm going to approach this.
+  
+  </details>
