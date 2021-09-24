@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:45 by lcouto            #+#    #+#             */
-/*   Updated: 2021/09/11 19:25:21 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/09/24 01:20:40 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,41 @@
 # define INPUT_TOO_LOW "ERROR: Input is below 1."
 # define NOT_DIGIT "ERROR: Input should be an integer."
 
+/*
+** Philosopher status macros.
+*/
+
+# define THINKING 0
+# define EATING 1
+# define SLEEPING 2
+# define DEAD 3
+
 typedef struct s_args
 {
-	int	philos;
+	int	total_philos;
 	int	death_time;
 	int	eat_time;
 	int	sleep_time;
-	int	meals;
+	int	total_meals;
 }		t_args;
+
+typedef struct s_philo
+{
+	char			*name;
+	int				status;
+	int				right_hand;
+	int				left_hand;
+	int				meals_eaten;
+	long long int	last_meal;
+	
+}				t_philo;
+
+typedef struct s_state
+{
+	t_args			*args;
+	t_philo			*philos;
+	pthread_mutex_t *forks;
+}					t_state;
 
 /*
 ** Auxiliary functions.
@@ -56,6 +83,8 @@ int				ft_atoi(const char *str);
 long long int	ft_atoll(char *str);
 int				ft_isdigit(int c);
 void			ft_putendl_fd(char *s, int fd);
+char			*ft_strjoin(char const *s1, char const *s2);
+char			*ft_itoa(int n);
 
 int				are_there_input_errors(int argc, char **argv);
 

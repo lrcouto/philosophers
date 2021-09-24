@@ -6,7 +6,7 @@
 #    By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/11 13:26:32 by lcouto            #+#    #+#              #
-#    Updated: 2021/09/11 18:16:20 by lcouto           ###   ########.fr        #
+#    Updated: 2021/09/23 01:37:45 by lcouto           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ SRCS		=	$(DIR_SRCS)/main.c \
 				$(DIR_SRCS)/ft_atoll.c \
 				$(DIR_SRCS)/ft_isdigit.c \
 				$(DIR_SRCS)/error.c \
+				$(DIR_SRCS)/ft_itoa.c \
+				$(DIR_SRCS)/ft_strjoin.c \
 
 OBJS		=	$(subst $(DIR_SRCS), $(DIR_OBJS), $(SRCS:.c=.o))
 
