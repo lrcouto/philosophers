@@ -22,5 +22,7 @@ This exercise is part of the basic curriculum at <a href='https://www.42sp.org.b
   **September 11th 2021** - I set up the project structure and Makefile, as well as some standard input error handling. I still have to figure out exactly how I'm going to approach this.
 
   **September 22th 2021** - Still structuring the project and started playing with threads. Don't really know how I'm gonna do this yet.
-  
+
+  **September 22th 2021** - Philosophers are now threads and they "take turns" thinking. Tomorrow I will try to implement their actual eating/sleeping/thinking routine. Maybe organize my files a little bit.
+
   </details>

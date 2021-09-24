@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:45 by lcouto            #+#    #+#             */
-/*   Updated: 2021/09/23 01:41:05 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/09/24 01:20:40 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@
 # define THINKING 0
 # define EATING 1
 # define SLEEPING 2
-# define HUNGRY 3
-# define DEAD 4
+# define DEAD 3
 
 typedef struct s_args
 {

@@ -6,11 +6,23 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:34 by lcouto            #+#    #+#             */
-/*   Updated: 2021/09/23 01:52:19 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/09/24 01:16:41 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void	join_threads(t_state *state, pthread_t *thread)
+{
+	int			i;
+
+	i = 0;
+	while(i < state->args->total_philos)
+	{
+		pthread_join(thread[i], NULL);
+		i++;
+	}
+}
 
 static void *routine(void *philo_pointer)
 {
@@ -23,24 +35,23 @@ static void *routine(void *philo_pointer)
 	}
 }
 
-static void	build_threads(t_state *state)
+static void	build_threads(t_state *state, pthread_t *thread)
 {
 	int			i;
-	pthread_t	thread;
 	void		*current_philo;
 
 	i = 0;
 	while(i < state->args->total_philos)
 	{
 		current_philo = (void*)(&state->philos[i]);
-		pthread_create(&thread, NULL, &routine, current_philo);
+		pthread_create(&thread[i], NULL, &routine, current_philo);
 		i++;
 	}
 }
 
 static void	init_philos(t_state *state)
 {
-	int	i;
+	int			i;
 
 	i = 0;
 	while(i< state->args->total_philos)
@@ -57,10 +68,13 @@ static void	init_philos(t_state *state)
 
 static void	init_state(t_state *state, t_args *args)
 {
+	pthread_t	thread[100];
+
 	state->args = args;
 	state->philos = (t_philo *)malloc(sizeof(t_philo) * args->total_philos);
 	init_philos(state);
-	build_threads(state);
+	build_threads(state, thread);
+	join_threads(state, thread);
 }
 
 static void	get_args(char **argv, t_args *args)
