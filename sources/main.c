@@ -6,11 +6,36 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:34 by lcouto            #+#    #+#             */
-/*   Updated: 2021/09/24 01:16:41 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/09/27 21:35:14 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void	wait_time_in_ms(long long int time)
+{
+	usleep(time * 1000);
+}
+
+static int thinking(t_philo *philo)
+{
+	printf("%s is lost in though.\n", philo->name);
+	return (TRUE);
+}
+
+static int sleeping(t_philo *philo)
+{
+	printf("%s is taking a nap. ZzZzZzZz.\n", philo->name);
+	wait_time_in_ms(philo->sleep_time);
+	return (TRUE);
+}
+
+static int eating(t_philo *philo)
+{
+	printf("%s is eating! Yum!\n", philo->name);
+	wait_time_in_ms(philo->eat_time);
+	return (TRUE);
+}
 
 static void	join_threads(t_state *state, pthread_t *thread)
 {
@@ -29,10 +54,9 @@ static void *routine(void *philo_pointer)
 	t_philo	*philo;
 
 	philo = (t_philo*)philo_pointer;
-	while(1)
-	{
-		printf("%s is thinking...\n", philo->name);
-	}
+	while(eating(philo) && sleeping(philo) && thinking(philo))
+		continue ;
+	return (NULL);
 }
 
 static void	build_threads(t_state *state, pthread_t *thread)
@@ -62,6 +86,9 @@ static void	init_philos(t_state *state)
 		state->philos[i].last_meal = 0;
 		state->philos[i].left_hand = i;
 		state->philos[i].right_hand = (i + 1) % state->args->total_philos;
+		state->philos[i].sleep_time = state->args->sleep_time;
+		state->philos[i].eat_time = state->args->eat_time;
+		state->philos[i].death_time = state->args->death_time;	//TODO: Fix this disgusting mess.
 		i++;
 	}
 }

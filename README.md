@@ -25,4 +25,6 @@ This exercise is part of the basic curriculum at <a href='https://www.42sp.org.b
 
   **September 22th 2021** - Philosophers are now threads and they "take turns" thinking. Tomorrow I will try to implement their actual eating/sleeping/thinking routine. Maybe organize my files a little bit.
 
+  **September 27th 2021** - Now the philosophers eat/think/sleep, but the files are still a mess. I'm gonna fix it later. Gotta figure out mutexes now.
+
   </details>

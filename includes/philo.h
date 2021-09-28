@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:45 by lcouto            #+#    #+#             */
-/*   Updated: 2021/09/24 01:20:40 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/09/27 21:20:35 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ typedef struct s_philo
 	int				left_hand;
 	int				meals_eaten;
 	long long int	last_meal;
-	
+	int				death_time;
+	int				eat_time;
+	int				sleep_time;
 }				t_philo;
 
 typedef struct s_state
