@@ -27,4 +27,6 @@ This exercise is part of the basic curriculum at <a href='https://www.42sp.org.b
 
   **September 27th 2021** - Now the philosophers eat/think/sleep, but the files are still a mess. I'm gonna fix it later. Gotta figure out mutexes now.
 
+  **September 29th 2021** - Mutexes/forks implemented, and we're starting to count time. REALLY need to refactor to clean up. Having occasional deadlocks that need to be addressed.
+
   </details>
