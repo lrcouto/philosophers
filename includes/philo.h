@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:45 by lcouto            #+#    #+#             */
-/*   Updated: 2021/09/24 01:20:40 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/09/29 22:41:28 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,14 @@ typedef struct s_philo
 {
 	char			*name;
 	int				status;
-	int				right_hand;
-	int				left_hand;
+	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*left_fork;
 	int				meals_eaten;
 	long long int	last_meal;
-	
+	int				death_time;
+	int				eat_time;
+	int				sleep_time;
+	long long int	session_start;
 }				t_philo;
 
 typedef struct s_state
@@ -73,6 +76,7 @@ typedef struct s_state
 	t_args			*args;
 	t_philo			*philos;
 	pthread_mutex_t *forks;
+	long long int	session_start;
 }					t_state;
 
 /*
@@ -87,5 +91,6 @@ char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_itoa(int n);
 
 int				are_there_input_errors(int argc, char **argv);
+
 
 #endif
