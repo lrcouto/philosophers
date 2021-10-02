@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:34 by lcouto            #+#    #+#             */
-/*   Updated: 2021/09/29 23:03:37 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/01 21:37:32 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static void	wait_time_in_ms(long long int time)
 static void	release_forks(t_philo *philo)
 {
 	pthread_mutex_unlock(philo->left_fork);
-	printf("%lld | %s dropped their left fork.\n", timestamp(philo->session_start), philo->name);
+	printf("%lld | Philosopher %d dropped their left fork.\n", timestamp(philo->session_start), philo->index);
 	pthread_mutex_unlock(philo->right_fork);
-	printf("%lld | %s dropped their right fork.\n", timestamp(philo->session_start), philo->name);
+	printf("%lld | Philosopher %d dropped their right fork.\n", timestamp(philo->session_start), philo->index);
 	philo->meals_eaten += 1;
 	philo->last_meal = timestamp(philo->session_start);
 }
@@ -43,23 +43,23 @@ static void	release_forks(t_philo *philo)
 static void	pick_up_forks(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
-	printf("%lld | %s took a fork in their left hand.\n", timestamp(philo->session_start), philo->name);
+	printf("%lld | Philosopher %d took a fork in their left hand.\n", timestamp(philo->session_start), philo->index);
 	pthread_mutex_lock(philo->right_fork);
-	printf("%lld | %s took a fork in their right hand.\n", timestamp(philo->session_start), philo->name);
+	printf("%lld | Philosopher %d took a fork in their right hand.\n", timestamp(philo->session_start), philo->index);
 	philo->status = EATING;
 }
 
 static int thinking(t_philo *philo)
 {
 	philo->status = THINKING;
-	printf("%lld | %s is lost in though.\n", timestamp(philo->session_start), philo->name);
+	printf("%lld | Philosopher %d is lost in though.\n", timestamp(philo->session_start), philo->index);
 	return (TRUE);
 }
 
 static int sleeping(t_philo *philo)
 {
 	philo->status = SLEEPING;
-	printf("%lld | %s is taking a nap. ZzZzZzZz.\n", timestamp(philo->session_start), philo->name);
+	printf("%lld | Philosopher %d is taking a nap. ZzZzZzZz.\n", timestamp(philo->session_start), philo->index);
 	wait_time_in_ms(philo->sleep_time);
 	return (TRUE);
 }
@@ -67,7 +67,7 @@ static int sleeping(t_philo *philo)
 static int eating(t_philo *philo)
 {
 	pick_up_forks(philo);
-	printf("%lld | %s is eating! Yum!\n", timestamp(philo->session_start), philo->name);
+	printf("%lld | Philosopher %d is eating! Yum!\n", timestamp(philo->session_start), philo->index);
 	release_forks(philo);
 	wait_time_in_ms(philo->eat_time);
 	return (TRUE);
@@ -90,6 +90,8 @@ static void *routine(void *philo_pointer)
 	t_philo	*philo;
 
 	philo = (t_philo*)philo_pointer;
+	if (philo->index % 2 == 0)
+		usleep(100);
 	while(eating(philo) && sleeping(philo) && thinking(philo))
 		continue ;
 	return (NULL);
@@ -117,7 +119,7 @@ static void	init_philos(t_state *state)
 	i = 0;
 	while(i< state->args->total_philos)
 	{
-		state->philos[i].name = ft_strjoin("Philosopher ", ft_itoa(i));	//TODO: make name selector just because it's cool.
+		state->philos[i].index = i;
 		state->philos[i].meals_eaten = 0;
 		state->philos[i].status = THINKING;
 		state->philos[i].last_meal = 0;
