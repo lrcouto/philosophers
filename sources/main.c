@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:34 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/02 14:14:48 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/02 15:27:04 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,21 +85,21 @@ static void	join_threads(t_state *state, pthread_t *thread)
 	}
 }
 
-static void	*monitor_death(void *philo_pointer)
+static void	*monitor_end(void *philo_pointer)
 {
 	t_philo	*philo;
 
 	philo = (t_philo*)philo_pointer;
 	while (1)
 	{
-		pthread_mutex_lock(philo->death_monitor);
+		pthread_mutex_lock(philo->end_monitor);
 		if ((philo->last_meal - get_time()) < philo->death_time)
 		{
 			printf("%lld | Philosopher %d has starved to death.\n", timestamp(philo->session_start), philo->index);
-			pthread_mutex_unlock(philo->death_monitor);
+			pthread_mutex_unlock(philo->end_monitor);
 			return ((void *)1);
 		}
-		pthread_mutex_unlock(philo->death_monitor);
+		pthread_mutex_unlock(philo->end_monitor);
 		usleep(1000);
 	}
 }
@@ -107,11 +107,12 @@ static void	*monitor_death(void *philo_pointer)
 static void *routine(void *philo_pointer)
 {
 	t_philo		*philo;
-	pthread_t	death;
+	pthread_t	end;
 
 	philo = (t_philo*)philo_pointer;
-	if (pthread_create(&death, NULL, &monitor_death, philo) != 0)
+	if (pthread_create(&end, NULL, &monitor_end, philo) != 0)
 		return((void *)1);
+	pthread_detach(end);
 	if (philo->index % 2 == 0)
 		usleep(100);
 	while(eating(philo) && sleeping(philo) && thinking(philo))
@@ -153,7 +154,8 @@ static void	init_philos(t_state *state)
 		state->philos[i].eat_time = state->args->eat_time;
 		state->philos[i].death_time = state->args->death_time;	//TODO: Fix this disgusting mess.
 		state->philos[i].session_start = state->session_start;
-		pthread_mutex_init(state->philos[i].death_monitor, NULL);
+		state->philos[i].end_monitor = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+		pthread_mutex_init(state->philos[i].end_monitor, NULL);
 		i++;
 	}
 }

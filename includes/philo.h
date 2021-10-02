@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:45 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/02 13:49:25 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/02 15:21:25 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_philo
 	int				eat_time;
 	int				sleep_time;
 	long long int	session_start;
-	pthread_mutex_t	*death_monitor;
+	pthread_mutex_t	*end_monitor;
 }				t_philo;
 
 typedef struct s_state
