@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:34 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/03 13:14:52 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/04 22:15:05 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static void	release_forks(t_philo *philo)
 	pthread_mutex_unlock(philo->right_fork);
 	printf("%lld | Philosopher %d dropped their right fork.\n", timestamp(philo->session_start), philo->index);
 	philo->meals_eaten += 1;
-	philo->last_meal = timestamp(philo->session_start);
 }
 
 static void	pick_up_forks(t_philo *philo)
@@ -46,19 +45,21 @@ static void	pick_up_forks(t_philo *philo)
 	printf("%lld | Philosopher %d took a fork in their left hand.\n", timestamp(philo->session_start), philo->index);
 	pthread_mutex_lock(philo->right_fork);
 	printf("%lld | Philosopher %d took a fork in their right hand.\n", timestamp(philo->session_start), philo->index);
-	philo->status = EATING;
+	philo->last_meal = timestamp(philo->session_start);
 }
 
 static int thinking(t_philo *philo)
 {
-	philo->status = THINKING;
+	if (*philo->death == TRUE)
+		return (FALSE);
 	printf("%lld | Philosopher %d is lost in though.\n", timestamp(philo->session_start), philo->index);
 	return (TRUE);
 }
 
 static int sleeping(t_philo *philo)
 {
-	philo->status = SLEEPING;
+	if (*philo->death == TRUE)
+		return (FALSE);
 	printf("%lld | Philosopher %d is taking a nap. ZzZzZzZz.\n", timestamp(philo->session_start), philo->index);
 	wait_time_in_ms(philo->sleep_time);
 	return (TRUE);
@@ -66,6 +67,8 @@ static int sleeping(t_philo *philo)
 
 static int eating(t_philo *philo)
 {
+	if (*philo->death == TRUE)
+		return (FALSE);
 	pick_up_forks(philo);
 	printf("%lld | Philosopher %d is eating! Yum!\n", timestamp(philo->session_start), philo->index);
 	release_forks(philo);
@@ -92,15 +95,15 @@ static void	*monitor_end(void *philo_pointer)
 	philo = (t_philo*)philo_pointer;
 	while (1)
 	{
-		pthread_mutex_lock(philo->end_monitor);
-		if ((philo->last_meal - get_time()) < philo->death_time)
+		if ((timestamp(philo->session_start) - philo->last_meal) > philo->death_time)
 		{
-			printf("%lld | Philosopher %d has starved to death.\n", timestamp(philo->session_start), philo->index);
+			if (*philo->death == FALSE)
+				printf("%lld | Philosopher %d has starved to death\n", timestamp(philo->session_start), philo->index);
+			pthread_mutex_lock(philo->end_monitor);
+			*philo->death = TRUE;
 			pthread_mutex_unlock(philo->end_monitor);
 			return ((void *)1);
 		}
-		pthread_mutex_unlock(philo->end_monitor);
-		usleep(1000);
 	}
 }
 
@@ -144,9 +147,9 @@ static void	init_philos(t_state *state)
 	i = 0;
 	while(i< state->args->total_philos)
 	{
-		state->philos[i].index = i;
+		state->philos[i].index = i + 1;
 		state->philos[i].meals_eaten = 0;
-		state->philos[i].status = THINKING;
+		state->philos[i].death = &state->death;
 		state->philos[i].last_meal = 0;
 		state->philos[i].left_fork = &state->forks[i];
 		state->philos[i].right_fork = &state->forks[(i + 1) % state->args->total_philos];
@@ -154,8 +157,7 @@ static void	init_philos(t_state *state)
 		state->philos[i].eat_time = state->args->eat_time;
 		state->philos[i].death_time = state->args->death_time;	//TODO: Fix this disgusting mess.
 		state->philos[i].session_start = state->session_start;
-		state->philos[i].end_monitor = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-		pthread_mutex_init(state->philos[i].end_monitor, NULL);
+		state->philos[i].end_monitor = &state->end_monitor;
 		i++;
 	}
 }
@@ -165,7 +167,6 @@ static void	init_forks(t_state *state)
 	int	i;
 
 	i = 0;
-	state->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * state->args->total_philos);
 	while (i < state->args->total_philos)
 	{
 		pthread_mutex_init(&state->forks[i], NULL);
@@ -179,7 +180,8 @@ static int	init_state(t_state *state, t_args *args)
 
 	state->args = args;
 	state->session_start = get_time();
-	state->philos = (t_philo *)malloc(sizeof(t_philo) * args->total_philos);
+	state->death = FALSE;
+	pthread_mutex_init(&state->end_monitor, NULL);
 	init_forks(state);
 	init_philos(state);
 	if (build_threads(state, thread) != 0)
