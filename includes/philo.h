@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:45 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/02 15:21:25 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/04 22:00:05 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,6 @@
 # define INPUT_TOO_LOW "ERROR: Input is below 1."
 # define NOT_DIGIT "ERROR: Input should be an integer."
 
-/*
-** Philosopher status macros.
-*/
-
-# define THINKING 0
-# define EATING 1
-# define SLEEPING 2
-# define DEAD 3
-
 typedef struct s_args
 {
 	int	total_philos;
@@ -60,7 +51,7 @@ typedef struct s_args
 typedef struct s_philo
 {
 	int				index;
-	int				status;
+	int				*death;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
 	int				meals_eaten;
@@ -75,9 +66,11 @@ typedef struct s_philo
 typedef struct s_state
 {
 	t_args			*args;
-	t_philo			*philos;
-	pthread_mutex_t *forks;
+	t_philo			philos[200];
+	pthread_mutex_t forks[200];
 	long long int	session_start;
+	pthread_mutex_t	end_monitor;
+	int				death;
 }					t_state;
 
 /*
