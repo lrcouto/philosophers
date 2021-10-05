@@ -29,6 +29,6 @@ This exercise is part of the basic curriculum at <a href='https://www.42sp.org.b
 
   **September 29th 2021** - Mutexes/forks implemented, and we're starting to count time. REALLY need to refactor to clean up. Having occasional deadlocks that need to be addressed.
 
-  **October 54th 2021** - Philosophers now starve to death as they should. Code still looks like a messy heap of garbage. Allocated everything on the stack because I don't wanna deal with mallocs.
+  **October 4th 2021** - Philosophers now starve to death as they should. Code still looks like a messy heap of garbage. Allocated everything on the stack because I don't wanna deal with mallocs.
 
   </details>
