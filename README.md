@@ -31,4 +31,6 @@ This exercise is part of the basic curriculum at <a href='https://www.42sp.org.b
 
   **October 4th 2021** - Philosophers now starve to death as they should. Code still looks like a messy heap of garbage. Allocated everything on the stack because I don't wanna deal with mallocs.
 
+  **October 5th 2021** - Implemented satiation mechanics, and technically the project is "done". Still got some bugs to deal with, deadlocks when the simulation runs with two Philosophers, and the infamous 410 parameter causes an unknown-crash.
+
   </details>
