@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:45 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/04 22:00:05 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/05 22:14:38 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 # define INPUT_TOO_HIGH "ERROR: Input is above the int limit"
 # define INPUT_TOO_LOW "ERROR: Input is below 1."
 # define NOT_DIGIT "ERROR: Input should be an integer."
+# define TOO_MANY_PHILOS "We don't need that many Ṕhilosophers. Put some back."
+# define ZERO_PHILOS "If no one is there to eat the spaghetti, does it exist?"
 
 typedef struct s_args
 {
@@ -55,12 +57,14 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
 	int				meals_eaten;
+	int				*total_meals;
 	long long int	last_meal;
 	int				death_time;
 	int				eat_time;
 	int				sleep_time;
 	long long int	session_start;
 	pthread_mutex_t	*end_monitor;
+	pthread_mutex_t	*print_lock;
 }				t_philo;
 
 typedef struct s_state
@@ -70,6 +74,7 @@ typedef struct s_state
 	pthread_mutex_t forks[200];
 	long long int	session_start;
 	pthread_mutex_t	end_monitor;
+	pthread_mutex_t	print_lock;
 	int				death;
 }					t_state;
 
