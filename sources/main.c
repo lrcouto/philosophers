@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:34 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/05 22:38:34 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/06 01:24:20 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ static void	*monitor_end(void *philo_pointer)
 			pthread_mutex_unlock(philo->end_monitor);
 			return ((void *)1);
 		}
+		usleep(1000);
 	}
 }
 
@@ -147,7 +148,7 @@ static void *routine(void *philo_pointer)
 		return((void *)1);
 	pthread_detach(end);
 	if (philo->index % 2 == 0)
-		usleep(100);
+		usleep(6000);
 	while(eating(philo) && sleeping(philo) && thinking(philo))
 		continue ;
 	return (NULL);
