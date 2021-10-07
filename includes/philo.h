@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:45 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/05 22:14:38 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/06 21:46:36 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_philo
 {
 	int				index;
 	int				*death;
+	int				*who_is_dead;
+	long long int	*time_of_death;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
 	int				meals_eaten;
@@ -72,6 +74,8 @@ typedef struct s_state
 	t_args			*args;
 	t_philo			philos[200];
 	pthread_mutex_t forks[200];
+	int				who_is_dead;
+	long long int	time_of_death;
 	long long int	session_start;
 	pthread_mutex_t	end_monitor;
 	pthread_mutex_t	print_lock;
