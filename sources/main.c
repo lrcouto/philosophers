@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:34 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/05 22:38:34 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/06 22:27:41 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,21 +116,22 @@ static void	*monitor_end(void *philo_pointer)
 	philo = (t_philo*)philo_pointer;
 	while (1)
 	{
-		if (is_philo_satiated(philo) == TRUE)
+		if (*philo->death == TRUE)
 		{
-			printf("%lld | Philosopher %d ate %d meals is now satiated!\n", timestamp(philo->session_start), philo->index, philo->meals_eaten);
+			pthread_mutex_unlock(philo->left_fork);
+			pthread_mutex_unlock(philo->right_fork);
 			return ((void *)1);
 		}
-		if ((timestamp(philo->session_start) - philo->last_meal) > philo->death_time)
+		if (is_philo_satiated(philo) == TRUE)
+			printf("%lld | Philosopher %d ate %d meals is now satiated!\n", timestamp(philo->session_start), philo->index, philo->meals_eaten);
+		if ((timestamp(philo->session_start) - philo->last_meal) > philo->death_time && *philo->death == FALSE)
 		{
-			if (*philo->death == FALSE)
-			{
-				pthread_mutex_lock(philo->print_lock);
-				printf("%lld | Philosopher %d has starved to death\n", timestamp(philo->session_start), philo->index);
-				pthread_mutex_unlock(philo->print_lock);
-			}
+			pthread_mutex_unlock(philo->left_fork);
+			pthread_mutex_unlock(philo->right_fork);
 			pthread_mutex_lock(philo->end_monitor);
 			*philo->death = TRUE;
+			*philo->time_of_death = timestamp(philo->session_start);
+			*philo->who_is_dead = philo->index;
 			pthread_mutex_unlock(philo->end_monitor);
 			return ((void *)1);
 		}
@@ -147,7 +148,7 @@ static void *routine(void *philo_pointer)
 		return((void *)1);
 	pthread_detach(end);
 	if (philo->index % 2 == 0)
-		usleep(100);
+		usleep(6000);
 	while(eating(philo) && sleeping(philo) && thinking(philo))
 		continue ;
 	return (NULL);
@@ -164,7 +165,6 @@ static int	build_threads(t_state *state, pthread_t *thread)
 		current_philo = (void*)(&state->philos[i]);
 		if (pthread_create(&thread[i], NULL, &routine, current_philo) != 0)
 			return(1);
-		pthread_detach(*thread);
 		i++;
 	}
 	return (0);
@@ -180,6 +180,8 @@ static void	init_philos(t_state *state)
 		state->philos[i].index = i + 1;
 		state->philos[i].meals_eaten = 0;
 		state->philos[i].death = &state->death;
+		state->philos[i].who_is_dead = &state->who_is_dead;
+		state->philos[i].time_of_death = &state->time_of_death;
 		state->philos[i].last_meal = 0;
 		state->philos[i].left_fork = &state->forks[i];
 		state->philos[i].right_fork = &state->forks[(i + 1) % state->args->total_philos];
@@ -206,21 +208,21 @@ static void	init_forks(t_state *state)
 	}
 }
 
-static int	init_state(t_state *state, t_args *args)
+static void	init_state(t_state *state, t_args *args)
 {
-	pthread_t	thread[100];
+	pthread_t	thread[200];
 
 	state->args = args;
 	state->session_start = get_time();
+	state->time_of_death = 0;
 	state->death = FALSE;
+	state->who_is_dead = 0;
 	pthread_mutex_init(&state->end_monitor, NULL);
 	pthread_mutex_init(&state->print_lock, NULL);
 	init_forks(state);
 	init_philos(state);
-	if (build_threads(state, thread) != 0)
-		return (1);
+	build_threads(state, thread);
 	join_threads(state, thread);
-	return (0);
 }
 
 static void	get_args(char **argv, t_args *args)
@@ -243,7 +245,8 @@ int	main(int argc, char **argv)
 	if (are_there_input_errors(argc, argv) == TRUE)
 		return (-1);
 	get_args(argv, &args);
-	if (init_state(&state, &args) != 0)
-		return(1);
+	init_state(&state, &args);
+	if (state.death == TRUE)
+		printf("%lld | Philosopher %d has starved to death\n", state.time_of_death, state.who_is_dead);
 	return (0);
 }

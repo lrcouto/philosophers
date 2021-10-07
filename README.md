@@ -33,4 +33,6 @@ This exercise is part of the basic curriculum at <a href='https://www.42sp.org.b
 
   **October 5th 2021** - Implemented satiation mechanics, and technically the project is "done". Still got some bugs to deal with, deadlocks when the simulation runs with two Philosophers, and the infamous 410 parameter causes an unknown-crash.
 
+  **October 6th 2021** - Fixed the last bugs apparently. Now I only need to refactor the program and make it norme-compliant, and maybe a little prettier.
+
   </details>
