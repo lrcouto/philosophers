@@ -1,4 +1,11 @@
 # philosophers
+
+---
+
+**Welcome to the STRICT branch! If you've been directed here, it's probably because you were like "nuh uh the norme doesn't allow system calls for Philosophers" and you're no fun, so you get correct the bland, unseasoned version of this project.**
+
+---
+
 In computer science, the dining philosophers problem is an example problem often used in concurrent algorithm design to illustrate synchronization issues and techniques for resolving them.
 
 It was originally formulated in 1965 by <a href='https://en.wikipedia.org/wiki/Edsger_W._Dijkstra'>Edsger Dijkstra</a> as a student exam exercise, presented in terms of computers competing for access to tape drive peripherals. Soon after, <a href='https://en.wikipedia.org/wiki/Tony_Hoare'>Tony Hoare</a> gave the problem its present formulation:
@@ -36,5 +43,7 @@ This exercise is part of the basic curriculum at <a href='https://www.42sp.org.b
   **October 6th 2021** - Fixed the last bugs apparently. Now I only need to refactor the program and make it norme-compliant, and maybe a little prettier.
 
   **October 8th 2021** - Program is ready, passing tests and everything, norme is OK. Adding a delay meter to the repo to make the evaluations easier. I'm not done yet though, I wanna make it a little prettier, a little more interesting. Make it a little fancier.
+
+  **October 9th 2021** - Pushed strict branch for evaluators who take themselves a bit too seriously.
 
   </details>
