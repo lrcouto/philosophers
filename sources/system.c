@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 20:31:38 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/09 17:26:38 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/09 18:45:46 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	init_philos(t_state *state)
 	i = 0;
 	while (i < state->args->total_philos)
 	{
+		state->philos[i].index = i;
 		get_philo_name(state->philos[i].name, state);
 		state->philos[i].meals_eaten = 0;
 		state->philos[i].death = &state->death;
