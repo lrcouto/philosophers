@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 20:31:38 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/09 01:13:11 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/09 03:15:53 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	init_philos(t_state *state)
 	while (i < state->args->total_philos)
 	{
 		state->philos[i].index = i + 1;
+		get_philo_name(state->philos[i].name, state->taken_names);
 		state->philos[i].meals_eaten = 0;
 		state->philos[i].death = &state->death;
 		state->philos[i].who_is_dead = &state->who_is_dead;
@@ -88,10 +89,12 @@ void	init_state(t_state *state, t_args *args)
 	state->time_of_death = 0;
 	state->death = FALSE;
 	state->who_is_dead = 0;
+	state->taken_names = (t_taken_names *)malloc(sizeof(t_taken_names));
 	pthread_mutex_init(&state->end_monitor, NULL);
 	pthread_mutex_init(&state->print_lock, NULL);
 	init_forks(state);
 	init_philos(state);
 	build_threads(state, thread);
 	join_threads(state, thread);
+	index_list_clear(state);
 }

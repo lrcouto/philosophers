@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/11 17:52:05 by lcouto            #+#    #+#             */
-/*   Updated: 2021/09/11 19:25:49 by lcouto           ###   ########.fr       */
+/*   Created: 2020/01/27 11:21:16 by lcouto            #+#    #+#             */
+/*   Updated: 2021/10/09 02:56:33 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_putendl_fd(char *s, int fd)
+char	*ft_strchr(const char *str, int c)
 {
-	char	lb;
+	int	i;
 
-	lb = '\n';
-	while (s && *s)
+	i = 0;
+	while (str[i])
 	{
-		write(fd, s, 1);
-		s++;
+		if (str[i] == c)
+		{
+			return ((char *)&str[i]);
+		}
+		i++;
 	}
-	write(fd, &lb, 1);
+	if (c == '\0')
+		return ((char *)&str[i]);
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:45 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/09 01:04:42 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/09 03:14:30 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <fcntl.h>
 
 /*
 ** Standard macros redefined because the norme is a picky fucker.
@@ -43,7 +44,7 @@
 # define ZERO_PHILOS "If no one is there to eat the spaghetti, does it exist?"
 
 /*
-** print_output definitions.
+** Output definitions.
 */
 
 # define THINKING 0
@@ -56,6 +57,28 @@
 # define SATIATED 7
 # define DEAD 8
 
+/*
+** Color definitions.
+*/
+
+# define BLACK "\033[0;30m"
+# define BOLD_BLACK "\033[1;30m"
+# define RED "\033[0;31m"
+# define BOLD_RED "\033[1;31m"
+# define GREEN "\033[0;32m"
+# define BOLD_GREEN "\033[1;32m"
+# define YELLOW "\033[0;33m"
+# define BOLD_YELLOW "\033[1;33m"
+# define BLUE "\033[0;34m"
+# define BOLD_BLUE "\033[1;34m"
+# define PURPLE "\033[0;35m"
+# define BOLD_PURPLE "\033[1;35m"
+# define CYAN "\033[0;36m"
+# define BOLD_CYAN "\033[1;36m"
+# define WHITE "\033[0;37m"
+# define BOLD_WHITE "\033[1;37m"
+# define RESET_COLOR "\033[0m"
+
 typedef struct s_args
 {
 	int	total_philos;
@@ -65,9 +88,16 @@ typedef struct s_args
 	int	total_meals;
 }		t_args;
 
+typedef struct s_taken_names
+{
+	unsigned int			index;
+	struct s_taken_names	*next;
+}				t_taken_names;
+
 typedef struct s_philo
 {
 	int				index;
+	char			name[25];
 	int				*death;
 	int				*who_is_dead;
 	long long int	*time_of_death;
@@ -95,6 +125,7 @@ typedef struct s_state
 	pthread_mutex_t	end_monitor;
 	pthread_mutex_t	print_lock;
 	int				death;
+	t_taken_names	*taken_names;
 }					t_state;
 
 /*
@@ -104,9 +135,16 @@ typedef struct s_state
 int				ft_atoi(const char *str);
 long long int	ft_atoll(char *str);
 int				ft_isdigit(int c);
-void			ft_putendl_fd(char *s, int fd);
-char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_itoa(int n);
+size_t			ft_strlcpy(char *dest, const char *src, size_t size);
+int				get_next_line(int fd, char **line);
+char			*ft_substr_gnl(char const *s, unsigned int start, size_t len);
+char			*ft_strjoin_gnl(char const *s1, char const *s2);
+char			*ft_strdup_gnl(const char *s1);
+char			*ft_strnew(size_t size);
+void			ft_strdel(char **s);
+char			*ft_strchr(const char *str, int c);
+size_t			ft_strlen(const char *str);
 
 int				are_there_input_errors(int argc, char **argv);
 
@@ -127,5 +165,9 @@ void			*routine(void *philo_pointer);
 
 void			output(long long int timestamp, 
 				int index, int type, int meals);
+
+void			index_list_clear(t_state *state);
+
+void			get_philo_name(char *name, t_taken_names *taken);
 
 #endif

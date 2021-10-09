@@ -37,4 +37,6 @@ This exercise is part of the basic curriculum at <a href='https://www.42sp.org.b
 
   **October 8th 2021** - Program is ready, passing tests and everything, norme is OK. Adding a delay meter to the repo to make the evaluations easier. I'm not done yet though, I wanna make it a little prettier, a little more interesting. Make it a little fancier.
 
+  **October 9th 2021** - Making a bit of a mess on a separate branch, trying to implement a fancy naming system for my philosophers. It's not really working, so I'm gonna debug tomorrow.
+
   </details>
