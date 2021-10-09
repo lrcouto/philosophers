@@ -2,7 +2,7 @@
 
 ---
 
-**Welcome to the STRICT branch! If you've been directed here, it's probably because you were like "nuh uh the norme doesn't allow system calls for Philosophers" and you're no fun, so you get correct the bland, unseasoned version of this project.**
+**Welcome to the STRICT branch! If you've been directed here, it's probably because you were like "nuh uh the norme doesn't allow system calls for Philosophers" and you're no fun, so you get to correct the bland, unseasoned version of this project.**
 
 ---
 
