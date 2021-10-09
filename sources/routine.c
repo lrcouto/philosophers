@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 20:37:48 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/09 01:11:17 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/09 18:22:22 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,21 @@ int	is_philo_satiated(t_philo *philo)
 	return (FALSE);
 }
 
+static void	satiation_sequence(t_philo *philo)
+{
+	pthread_mutex_lock(philo->print_lock);
+	output(timestamp(philo->session_start), philo->name,
+		SATIATED, philo->meals_eaten);
+	pthread_mutex_unlock(philo->print_lock);
+}
+
 static void	death_sequence(t_philo *philo)
 {
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
 	*philo->death = TRUE;
 	*philo->time_of_death = timestamp(philo->session_start);
-	*philo->who_is_dead = philo->index;
+	ft_strlcpy(philo->who_is_dead, philo->name, 25);
 }
 
 static void	*monitor_end(void *philo_pointer)
@@ -34,14 +44,12 @@ static void	*monitor_end(void *philo_pointer)
 	while (1)
 	{
 		if (*philo->death == TRUE)
+			return ((void *)1);
+		if (is_philo_satiated(philo) == TRUE)
 		{
-			pthread_mutex_unlock(philo->left_fork);
-			pthread_mutex_unlock(philo->right_fork);
+			satiation_sequence(philo);
 			return ((void *)1);
 		}
-		if (is_philo_satiated(philo) == TRUE)
-			output(timestamp(philo->session_start), philo->index,
-				SATIATED, philo->meals_eaten);
 		if ((timestamp(philo->session_start) - philo->last_meal)
 			> philo->death_time && *philo->death == FALSE)
 		{

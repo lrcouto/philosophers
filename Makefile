@@ -6,7 +6,7 @@
 #    By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/11 13:26:32 by lcouto            #+#    #+#              #
-#    Updated: 2021/10/08 22:07:40 by lcouto           ###   ########.fr        #
+#    Updated: 2021/10/09 17:49:39 by lcouto           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,13 +27,15 @@ SRCS		=	$(DIR_SRCS)/main.c \
 				$(DIR_SRCS)/system.c \
 				$(DIR_SRCS)/routine.c \
 				$(DIR_SRCS)/output.c \
-				$(DIR_SRCS)/ft_putendl_fd.c \
+				$(DIR_SRCS)/select_name.c \
 				$(DIR_SRCS)/ft_atoi.c \
 				$(DIR_SRCS)/ft_atoll.c \
 				$(DIR_SRCS)/ft_isdigit.c \
 				$(DIR_SRCS)/error.c \
 				$(DIR_SRCS)/ft_itoa.c \
-				$(DIR_SRCS)/ft_strjoin.c \
+				$(DIR_SRCS)/get_next_line.c \
+				$(DIR_SRCS)/gnl_utils.c \
+				$(DIR_SRCS)/string_utils.c \
 
 OBJS		=	$(subst $(DIR_SRCS), $(DIR_OBJS), $(SRCS:.c=.o))
 
