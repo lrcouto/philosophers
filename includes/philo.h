@@ -6,13 +6,14 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:45 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/06 21:46:36 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/09 01:04:42 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <string.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -40,6 +41,20 @@
 # define NOT_DIGIT "ERROR: Input should be an integer."
 # define TOO_MANY_PHILOS "We don't need that many Ṕhilosophers. Put some back."
 # define ZERO_PHILOS "If no one is there to eat the spaghetti, does it exist?"
+
+/*
+** print_output definitions.
+*/
+
+# define THINKING 0
+# define SLEEPING 1
+# define EATING 2
+# define PICK_LEFT_FORK 3
+# define PICK_RIGHT_FORK 4
+# define DROP_LEFT_FORK 5
+# define DROP_RIGHT_FORK 6
+# define SATIATED 7
+# define DEAD 8
 
 typedef struct s_args
 {
@@ -95,5 +110,22 @@ char			*ft_itoa(int n);
 
 int				are_there_input_errors(int argc, char **argv);
 
+__uint64_t		get_time(void);
+long long int	timestamp(long long int session_start);
+void			wait_time_in_ms(long long int time);
+
+int				eating(t_philo *philo);
+int				sleeping(t_philo *philo);
+int				thinking(t_philo *philo);
+void			pick_up_forks(t_philo *philo);
+void			pick_up_forks(t_philo *philo);
+
+int				is_philo_satiated(t_philo *philo);
+
+void			init_state(t_state *state, t_args *args);
+void			*routine(void *philo_pointer);
+
+void			output(long long int timestamp, 
+				int index, int type, int meals);
 
 #endif

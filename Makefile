@@ -6,7 +6,7 @@
 #    By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/11 13:26:32 by lcouto            #+#    #+#              #
-#    Updated: 2021/09/23 01:37:45 by lcouto           ###   ########.fr        #
+#    Updated: 2021/10/08 22:07:40 by lcouto           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,11 @@ DIR_SRCS	=	sources
 DIR_OBJS	=	objects
 
 SRCS		=	$(DIR_SRCS)/main.c \
+				$(DIR_SRCS)/time.c \
+				$(DIR_SRCS)/actions.c \
+				$(DIR_SRCS)/system.c \
+				$(DIR_SRCS)/routine.c \
+				$(DIR_SRCS)/output.c \
 				$(DIR_SRCS)/ft_putendl_fd.c \
 				$(DIR_SRCS)/ft_atoi.c \
 				$(DIR_SRCS)/ft_atoll.c \

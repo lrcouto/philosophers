@@ -35,4 +35,6 @@ This exercise is part of the basic curriculum at <a href='https://www.42sp.org.b
 
   **October 6th 2021** - Fixed the last bugs apparently. Now I only need to refactor the program and make it norme-compliant, and maybe a little prettier.
 
+  **October 8th 2021** - Program is ready, passing tests and everything, norme is OK. Adding a delay meter to the repo to make the evaluations easier. I'm not done yet though, I wanna make it a little prettier, a little more interesting. Make it a little fancier.
+
   </details>

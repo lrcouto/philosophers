@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 01:36:50 by lcouto            #+#    #+#             */
-/*   Updated: 2021/09/23 01:37:05 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/08 20:48:49 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	get_return_len(unsigned int n)
 	return (len + 1);
 }
 
-static char	*itoa_loop(unsigned int	nb, char *str, unsigned int len)
+static char	*itoa_loop(unsigned int nb, char *str, unsigned int len)
 {
 	int	i;
 
