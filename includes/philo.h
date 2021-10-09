@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:45 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/09 01:04:42 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/09 18:13:11 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ typedef struct s_state
 {
 	t_args			*args;
 	t_philo			philos[200];
-	pthread_mutex_t forks[200];
+	pthread_mutex_t	forks[200];
 	int				who_is_dead;
 	long long int	time_of_death;
 	long long int	session_start;
@@ -125,7 +125,7 @@ int				is_philo_satiated(t_philo *philo);
 void			init_state(t_state *state, t_args *args);
 void			*routine(void *philo_pointer);
 
-void			output(long long int timestamp, 
-				int index, int type, int meals);
+void			output(long long int timestamp,
+					int index, int type, int meals);
 
 #endif
