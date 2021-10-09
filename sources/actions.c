@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 20:15:05 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/09 18:22:19 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/09 20:37:59 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	release_forks(t_philo *philo)
 	pthread_mutex_unlock(philo->print_lock);
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_lock(philo->print_lock);
-	output(timestamp(philo->session_start), philo->name, DROP_LEFT_FORK, 0);
+	output(timestamp(philo->session_start), philo->name, DROP_RIGHT_FORK, 0);
 	pthread_mutex_unlock(philo->print_lock);
 	philo->meals_eaten += 1;
 }
