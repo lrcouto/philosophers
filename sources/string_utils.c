@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 02:19:56 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/09 02:59:27 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/09 17:49:02 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,42 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 		dest[size - 1] = '\0';
 	}
 	return (len);
+}
+
+char	*ft_strnew(size_t size)
+{
+	char	*str;
+	size_t	i;
+
+	i = 0;
+	str = (char *)malloc((size + 1) * sizeof(char));
+	if (str == 0)
+		return (0);
+	while (i <= size)
+	{
+		str[i] = '\0';
+		i++;
+	}
+	return (str);
+}
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	counter;
+
+	counter = 0;
+	while (str[counter] != '\0')
+	{
+		counter++;
+	}
+	return (counter);
+}
+
+void	ft_strdel(char **s)
+{
+	if (s == 0)
+		return ;
+	if (*s)
+		free(*s);
+	*s = 0;
 }

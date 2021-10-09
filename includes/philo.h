@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:17:45 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/09 03:14:30 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/09 17:34:42 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,10 @@
 # define BOLD_WHITE "\033[1;37m"
 # define RESET_COLOR "\033[0m"
 
+/*
+** Program state & philosopher structs.
+*/
+
 typedef struct s_args
 {
 	int	total_philos;
@@ -99,7 +103,7 @@ typedef struct s_philo
 	int				index;
 	char			name[25];
 	int				*death;
-	int				*who_is_dead;
+	char			*who_is_dead;
 	long long int	*time_of_death;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
@@ -118,8 +122,8 @@ typedef struct s_state
 {
 	t_args			*args;
 	t_philo			philos[200];
-	pthread_mutex_t forks[200];
-	int				who_is_dead;
+	pthread_mutex_t	forks[200];
+	char			who_is_dead[25];
 	long long int	time_of_death;
 	long long int	session_start;
 	pthread_mutex_t	end_monitor;
@@ -146,11 +150,23 @@ void			ft_strdel(char **s);
 char			*ft_strchr(const char *str, int c);
 size_t			ft_strlen(const char *str);
 
+/*
+** Error handling.
+*/
+
 int				are_there_input_errors(int argc, char **argv);
+
+/*
+** Time handling.
+*/
 
 __uint64_t		get_time(void);
 long long int	timestamp(long long int session_start);
 void			wait_time_in_ms(long long int time);
+
+/*
+** Actions.
+*/
 
 int				eating(t_philo *philo);
 int				sleeping(t_philo *philo);
@@ -158,16 +174,26 @@ int				thinking(t_philo *philo);
 void			pick_up_forks(t_philo *philo);
 void			pick_up_forks(t_philo *philo);
 
-int				is_philo_satiated(t_philo *philo);
+/*
+** System & routines.
+*/
 
+int				is_philo_satiated(t_philo *philo);
 void			init_state(t_state *state, t_args *args);
 void			*routine(void *philo_pointer);
 
-void			output(long long int timestamp, 
-				int index, int type, int meals);
+/*
+** Output formatting.
+*/
+
+void			output(long long int timestamp, char *name,
+					int type, int meals);
+
+/*
+** Philosopher name handlers.
+*/
 
 void			index_list_clear(t_state *state);
-
-void			get_philo_name(char *name, t_taken_names *taken);
+void			get_philo_name(char *name, t_state *state);
 
 #endif

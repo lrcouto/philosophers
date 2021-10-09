@@ -6,7 +6,7 @@
 #    By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/11 13:26:32 by lcouto            #+#    #+#              #
-#    Updated: 2021/10/09 02:58:54 by lcouto           ###   ########.fr        #
+#    Updated: 2021/10/09 17:49:39 by lcouto           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,14 +34,8 @@ SRCS		=	$(DIR_SRCS)/main.c \
 				$(DIR_SRCS)/error.c \
 				$(DIR_SRCS)/ft_itoa.c \
 				$(DIR_SRCS)/get_next_line.c \
-				$(DIR_SRCS)/ft_substr_gnl.c \
-				$(DIR_SRCS)/ft_strjoin_gnl.c \
-				$(DIR_SRCS)/ft_strdup_gnl.c \
-				$(DIR_SRCS)/ft_strlcpy.c \
-				$(DIR_SRCS)/ft_strdel.c \
-				$(DIR_SRCS)/ft_strchr.c \
-				$(DIR_SRCS)/ft_strnew.c \
-				$(DIR_SRCS)/ft_strlen.c \
+				$(DIR_SRCS)/gnl_utils.c \
+				$(DIR_SRCS)/string_utils.c \
 
 OBJS		=	$(subst $(DIR_SRCS), $(DIR_OBJS), $(SRCS:.c=.o))
 

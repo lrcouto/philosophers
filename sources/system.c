@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 20:31:38 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/09 03:15:53 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/09 17:26:38 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,10 @@ static void	init_philos(t_state *state)
 	i = 0;
 	while (i < state->args->total_philos)
 	{
-		state->philos[i].index = i + 1;
-		get_philo_name(state->philos[i].name, state->taken_names);
+		get_philo_name(state->philos[i].name, state);
 		state->philos[i].meals_eaten = 0;
 		state->philos[i].death = &state->death;
-		state->philos[i].who_is_dead = &state->who_is_dead;
+		state->philos[i].who_is_dead = state->who_is_dead;
 		state->philos[i].time_of_death = &state->time_of_death;
 		state->philos[i].last_meal = 0;
 		state->philos[i].left_fork = &state->forks[i];
@@ -88,8 +87,7 @@ void	init_state(t_state *state, t_args *args)
 	state->session_start = get_time();
 	state->time_of_death = 0;
 	state->death = FALSE;
-	state->who_is_dead = 0;
-	state->taken_names = (t_taken_names *)malloc(sizeof(t_taken_names));
+	state->taken_names = NULL;
 	pthread_mutex_init(&state->end_monitor, NULL);
 	pthread_mutex_init(&state->print_lock, NULL);
 	init_forks(state);

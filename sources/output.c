@@ -6,31 +6,58 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 21:39:30 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/09 01:04:24 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/09 17:26:30 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	output(long long int timestamp, int index, int type, int meals)
+static void	select_color(char *color, int type)
 {
+	if (type == THINKING)
+		ft_strlcpy(color, BOLD_BLUE, 10);
+	else if (type == SLEEPING)
+		ft_strlcpy(color, BOLD_CYAN, 10);
+	else if (type == EATING)
+		ft_strlcpy(color, BOLD_GREEN, 10);
+	else if (type == PICK_LEFT_FORK)
+		ft_strlcpy(color, GREEN, 10);
+	else if (type == PICK_RIGHT_FORK)
+		ft_strlcpy(color, GREEN, 10);
+	else if (type == DROP_LEFT_FORK)
+		ft_strlcpy(color, CYAN, 10);
+	else if (type == DROP_RIGHT_FORK)
+		ft_strlcpy(color, CYAN, 10);
+	else if (type == SATIATED)
+		ft_strlcpy(color, BOLD_PURPLE, 10);
+	else if (type == DEAD)
+		ft_strlcpy(color, BOLD_RED, 10);
+}
+
+void	output(long long int timestamp, char *name, int type, int meals)
+{
+	char	color[10];
+
+	select_color(color, type);
+	printf("%s", color);
 	printf("% 10lld | ", timestamp);
 	if (type == THINKING)
-		printf("Philosopher %d is lost in though.\n", index);
+		printf("%s is lost in though.\n", name);
 	else if (type == SLEEPING)
-		printf("Philosopher %d is taking a nap. ZzZzZzZz.\n", index);
+		printf("%s is taking a nap. ZzZzZzZz.\n", name);
 	else if (type == EATING)
-		printf("Philosopher %d is eating! Yum!\n", index);
+		printf("%s is eating! Yum!\n", name);
 	else if (type == PICK_LEFT_FORK)
-		printf("Philosopher %d took a fork in their left hand.\n", index);
+		printf("%s took a fork in their left hand.\n", name);
 	else if (type == PICK_RIGHT_FORK)
-		printf("Philosopher %d took a fork in their right hand.\n", index);
+		printf("%s took a fork in their right hand.\n", name);
 	else if (type == DROP_LEFT_FORK)
-		printf("Philosopher %d dropped their left fork.\n", index);
+		printf("%s dropped their left fork.\n", name);
 	else if (type == DROP_RIGHT_FORK)
-		printf("Philosopher %d dropped their right fork.\n", index);
-	else if (meals > 0 && type == SATIATED)
-		printf("Philosopher %d ate %d meals is now satiated!\n", index, meals);
+		printf("%s dropped their right fork.\n", name);
+	else if (type == SATIATED)
+		printf("%s ate %d meals and is now satiated!\n", name, meals);
 	else if (type == DEAD)
-		printf("Philosopher %d has starved to death\n", index);
+		printf("%s has starved to death\n", name);
+	printf("%s", RESET_COLOR);
 }
