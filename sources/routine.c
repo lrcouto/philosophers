@@ -6,7 +6,7 @@
 /*   By: lcouto <lcouto@student.42sp.org.br>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 20:37:48 by lcouto            #+#    #+#             */
-/*   Updated: 2021/10/09 18:22:22 by lcouto           ###   ########.fr       */
+/*   Updated: 2021/10/10 01:30:24 by lcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ static void	satiation_sequence(t_philo *philo)
 
 static void	death_sequence(t_philo *philo)
 {
-	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_unlock(philo->right_fork);
 	*philo->death = TRUE;
 	*philo->time_of_death = timestamp(philo->session_start);
 	ft_strlcpy(philo->who_is_dead, philo->name, 25);
